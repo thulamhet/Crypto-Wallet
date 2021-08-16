@@ -9,6 +9,7 @@ import VolumeScreen from './src/screens/VolumeScreen';
 import PopularScreen from './src/screens/PopularScreen';
 import UsdScreen from './src/screens/UsdScreen'
 
+//token : 26xmBUNvXvP_28AsyhyV
 
 const Tab = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
