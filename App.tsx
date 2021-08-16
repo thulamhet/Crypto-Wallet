@@ -1,18 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import AssetScreen from './src/screens/AssetScreen'
-import testScreen from './src/screens/testScreen';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { View, Text, Image, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
 import icons from './app/themes/icons'
 import colors from './app/themes/colors'
+import VolumeScreen from './src/screens/VolumeScreen';
+import PopularScreen from './src/screens/PopularScreen';
+import UsdScreen from './src/screens/UsdScreen'
+
+
 const Tab = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
 
-
-
 function App() {
+    const [searchText, setSearchText] = useState('a');
+    
     return (  
         <NavigationContainer>
             {/* Title and Menu */}
@@ -33,7 +36,7 @@ function App() {
             
             {/* Search */}
             <View style={styles.searchCoin}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => console.log(searchText)}>
                     <Image
                         source={icons.search}
                         resizeMode="cover"
@@ -47,16 +50,16 @@ function App() {
                 <TextInput
                     style={{}}
                     placeholder='Search'
-                    onChangeText={()=> {
-                    }}
+                    onChangeText={setSearchText}
                 />
             </View>
 
             <Tab.Navigator 
                 // screenOptions={{headerShown: false}}
             >
-                <Tab.Screen name="AssetScreen" component={AssetScreen} />
-                <Tab.Screen name="test" component={testScreen} />
+                <Tab.Screen name="USD" component={UsdScreen} initialParams={{searchText}}/>
+                <Tab.Screen name="Volume" component={VolumeScreen}/>
+                <Tab.Screen name="Popular" component={PopularScreen} />
             </Tab.Navigator>
         </NavigationContainer>
     )
