@@ -21,7 +21,7 @@ const VolumeScreen = () => {
         try {
             const getCoin = async () => {    
                 let res = await axios.get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest', {
-                            headers: { 'X-CMC_PRO_API_KEY': 'a7a57837-ff05-4073-89ff-165fbcd744c8' }
+                            headers: { 'X-CMC_PRO_API_KEY': '0f674722-d83a-4a02-8c9a-42a64984e9d7' }
                         });
                 // let res = await axios.get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/info', {
                 //             headers: { 'X-CMC_PRO_API_KEY': '0f674722-d83a-4a02-8c9a-42a64984e9d7' }
@@ -41,7 +41,7 @@ const VolumeScreen = () => {
     return (
         <SafeAreaView style={styles.container}>
             {/* List Coin */}
-            <CustomListCoin data = {data.filter(a => a.name.includes(searchText))}/>
+            <CustomListCoin data = {data.filter(a => (a.name.toLowerCase()).includes(searchText.toLowerCase()))}/>
         </SafeAreaView>
     )
 }

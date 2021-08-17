@@ -15,7 +15,7 @@ const Tab = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
 
 export const SearchContext = createContext({
-    searchText: {},
+    searchText: '',
     setSearchText: (data: string) => {},
   });
 

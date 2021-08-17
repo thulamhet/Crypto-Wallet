@@ -40,7 +40,7 @@ const PopularScreen = () => {
     return (
         <SafeAreaView style={styles.container}>
             {/* List Coin */}
-            <CustomListCoin data = {data.filter(a => a.name.includes(searchText))}/>
+            <CustomListCoin data = {data.filter(a => (a.name.toLowerCase()).includes(searchText.toLowerCase()))}/>
         </SafeAreaView>
     )
 }
