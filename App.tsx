@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
@@ -16,7 +16,7 @@ const Stack = createStackNavigator();
 
 function App() {
     const [searchText, setSearchText] = useState('a');
-    
+
     return (  
         <NavigationContainer>
             {/* Title and Menu */}

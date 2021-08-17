@@ -26,14 +26,14 @@ const UsdScreen = ({route}) => {
             }
             getCoin();
         } catch(error) {
-                console.log(error)
+            console.log(error)
         } 
-    }, [])
+    }, [searchText])
 
     return (
         <SafeAreaView style={styles.container}>
             {/* List Coin */}
-            <CustomListCoin data = {data}/>
+            <CustomListCoin data = {data} a = {searchText}/>
         </SafeAreaView>
     )
 }

@@ -4,48 +4,80 @@ import colors from '../../app/themes/colors'
 
 type CustomListCoinProps = {
     data: any;
+    a: string;
 }
 
-const renderItem = ({item}) => (
-    <TouchableOpacity 
-        style={styles.listCoinItem}
-        onPress={()=> {
+// const renderItem = ({item}) => (
+//     <TouchableOpacity 
+//         style={styles.listCoinItem}
+//         onPress={()=> {
+//         }}    
+//     >
+//         <View style={{flexDirection: 'row', marginLeft: 5}}>
+//             <Image
+//                 source={item?.source}
+//                 resizeMode="cover"
+//                 style={{
+//                     width: 50,
+//                     height: 50,
+//                     borderRadius: 40,
+//                     margin: 4,
+//                     alignSelf:'center',
+//                     // backgroundColor: colors.black
+//                 }}
+//             />
             
-        }}    
-    >
-        <View style={{flexDirection: 'row', marginLeft: 5}}>
-            <Image
-                source={item?.source}
-                resizeMode="cover"
-                style={{
-                    width: 50,
-                    height: 50,
-                    borderRadius: 40,
-                    margin: 4,
-                    alignSelf:'center',
-                    // backgroundColor: colors.black
-                }}
-            />
-            
-            <View style={{alignSelf: 'center', marginLeft: 5}}>
-                <Text style={{fontWeight: 'bold'}}>{item?.name}</Text>
-                <Text style={{color: colors.white}}>{item?.symbol}</Text>
-            </View>
-        </View>
+//             <View style={{alignSelf: 'center', marginLeft: 5}}>
+//                 <Text style={{fontWeight: 'bold'}}>{item?.name}</Text>
+//                 <Text style={{color: colors.white}}>{item?.symbol}</Text>
+//             </View>
+//         </View>
         
-        <View style={{alignSelf:'center', marginRight: 5}}>
-            <Text>${item.quote.USD.price.toFixed(2)}</Text>
-            <Text style ={{color: '#e02209'}}>{item.quote.USD.percent_change_7d.toFixed(2)}%</Text>
-        </View>
-    </TouchableOpacity>
-)
+//         <View style={{alignSelf:'center', marginRight: 5}}>
+//             <Text>${item.quote.USD.price.toFixed(2)}</Text>
+//             <Text style ={{color: '#e02209'}}>{item.quote.USD.percent_change_7d.toFixed(2)}%</Text>
+//         </View>
+//     </TouchableOpacity>
+// )
 
-const CustomListCoin : React.FC<CustomListCoinProps> = ({data}) => {
+const CustomListCoin : React.FC<CustomListCoinProps> = ({data, a}) => {
     return (
         <SafeAreaView>
             <FlatList
                 data={data}
-                renderItem={renderItem}
+                renderItem={({item}) => (
+                    <TouchableOpacity 
+                        style={styles.listCoinItem}
+                        onPress={()=> {
+                            console.log(a)
+                            }}    
+                     >
+                        <View style={{flexDirection: 'row', marginLeft: 5}}>
+                            <Image
+                                source={item?.source}
+                                resizeMode="cover"
+                                style={{
+                                    width: 50,
+                                    height: 50,
+                                    borderRadius: 40,
+                                    margin: 4,
+                                    alignSelf:'center',
+                                    // backgroundColor: colors.black
+                                }}
+                            />
+                            
+                            <View style={{alignSelf: 'center', marginLeft: 5}}>
+                                <Text style={{fontWeight: 'bold'}}>{item?.name}</Text>
+                                <Text style={{color: colors.white}}>{item?.symbol}</Text>
+                            </View>
+                        </View>
+            
+                        <View style={{alignSelf:'center', marginRight: 5}}>
+                            <Text>${item.quote.USD.price.toFixed(2)}</Text>
+                            <Text style ={{color: '#e02209'}}>{item.quote.USD.percent_change_7d.toFixed(2)}%</Text>
+                        </View>
+                    </TouchableOpacity>
+                )}
                 keyExtractor={item => item?.id}
             />
         </SafeAreaView>
