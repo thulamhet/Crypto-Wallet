@@ -4,7 +4,6 @@ import colors from '../../app/themes/colors'
 
 type CustomListCoinProps = {
     data: any;
-    a: string;
 }
 
 // const renderItem = ({item}) => (
@@ -40,7 +39,7 @@ type CustomListCoinProps = {
 //     </TouchableOpacity>
 // )
 
-const CustomListCoin : React.FC<CustomListCoinProps> = ({data, a}) => {
+const CustomListCoin : React.FC<CustomListCoinProps> = ({data}) => {
     return (
         <SafeAreaView>
             <FlatList
@@ -49,7 +48,6 @@ const CustomListCoin : React.FC<CustomListCoinProps> = ({data, a}) => {
                     <TouchableOpacity 
                         style={styles.listCoinItem}
                         onPress={()=> {
-                            console.log(a)
                             }}    
                      >
                         <View style={{flexDirection: 'row', marginLeft: 5}}>

@@ -33,7 +33,7 @@ const UsdScreen = ({route}) => {
     return (
         <SafeAreaView style={styles.container}>
             {/* List Coin */}
-            <CustomListCoin data = {data} a = {searchText}/>
+            <CustomListCoin data = {data}/>
         </SafeAreaView>
     )
 }
