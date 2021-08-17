@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { SafeAreaView, View, Text, Image, StyleSheet, TextInput, TouchableOpacity, FlatList } from "react-native";
 import colors from '../../app/themes/colors'
 import icons from '../../app/themes/icons'
 import axios from 'axios'
 import CustomListCoin from '../components/CustomListCoin';
+import { SearchContext } from '../../App';
 const PopularScreen = () => {
     const [data, setdata] = useState([]);
 
@@ -12,6 +13,8 @@ const PopularScreen = () => {
         data_temp.sort((data1: any, data2: any) => data2.quote.USD.price - data1.quote.USD.price)
         setdata(data_temp)
     }
+    const context = useContext(SearchContext);
+    const {searchText, setSearchText} = context;
 
     useEffect(() => {
         try {
@@ -32,12 +35,12 @@ const PopularScreen = () => {
         } catch(error) {
                 console.log(error)
         } 
-    }, [])
+    }, [searchText])
 
     return (
         <SafeAreaView style={styles.container}>
             {/* List Coin */}
-            <CustomListCoin data = {data}/>
+            <CustomListCoin data = {data.filter(a => a.name.includes(searchText))}/>
         </SafeAreaView>
     )
 }

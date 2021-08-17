@@ -47,8 +47,6 @@ const CustomListCoin : React.FC<CustomListCoinProps> = ({data}) => {
                 renderItem={({item}) => (
                     <TouchableOpacity 
                         style={styles.listCoinItem}
-                        onPress={()=> {
-                            }}    
                      >
                         <View style={{flexDirection: 'row', marginLeft: 5}}>
                             <Image
