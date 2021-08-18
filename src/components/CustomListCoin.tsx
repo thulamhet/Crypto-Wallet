@@ -4,7 +4,7 @@ import colors from '../themes/colors'
 
 type CustomListCoinProps = {
     data: any;
-    onPress : () => void;
+    onPress : (data: any, logo: any) => void;
     logoLink: any;
 }
 
@@ -16,7 +16,7 @@ const CustomListCoin : React.FC<CustomListCoinProps> = ({data, onPress, logoLink
                 renderItem={({item}) => (
                     <TouchableOpacity 
                         style={styles.listCoinItem}
-                        onPress={onPress}
+                        onPress={() => onPress(item, logoLink[item.symbol]?.logo)}
                      >
                         <View style={{flexDirection: 'row', marginLeft: 5}}>
                             <Image
@@ -40,7 +40,7 @@ const CustomListCoin : React.FC<CustomListCoinProps> = ({data, onPress, logoLink
             
                         <View style={{alignSelf:'center', marginRight: 5}}>
                             <Text>${item.quote.USD.price.toFixed(2)}</Text>
-                            <Text style ={{color: '#e02209'}}>{item.quote.USD.percent_change_7d.toFixed(2)}%</Text>
+                            <Text style ={{color: colors.red, textAlign: 'right'}}>{item.quote.USD.percent_change_7d.toFixed(2)}%</Text>
                         </View>
                     </TouchableOpacity>
                 )}

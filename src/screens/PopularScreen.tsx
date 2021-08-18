@@ -21,10 +21,10 @@ const PopularScreen = () => {
         try {
             const getCoin = async () => {    
                 let res = await axios.get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest', {
-                            headers: { 'X-CMC_PRO_API_KEY': 'a7a57837-ff05-4073-89ff-165fbcd744c8' }
+                            headers: { 'X-CMC_PRO_API_KEY': '0f674722-d83a-4a02-8c9a-42a64984e9d7' }
                         });
                 let res1 = await axios.get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/info?symbol=' + symbol , {
-                            headers: { 'X-CMC_PRO_API_KEY': 'a7a57837-ff05-4073-89ff-165fbcd744c8' }
+                            headers: { 'X-CMC_PRO_API_KEY': '0f674722-d83a-4a02-8c9a-42a64984e9d7' }
                         });
                 setLink(res1.data.data)
                 sortData(data, res)

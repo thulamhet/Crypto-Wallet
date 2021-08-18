@@ -6,6 +6,8 @@ import CustomListCoin from '../components/CustomListCoin';
 import { SearchContext } from '../../App';
 import CoinScreen from './CoinScreen';
 
+import coinAPI from '../services/api'
+
 const symbol = 'BTCB,WBTC,BTC,YFI,MKR,ETH,BCH,COMP,AAVE,BNB,KSM,XMR,DASH,LTC,DCR,BSV,QNT,EGLD,ZEC,AXS,ZEN,FIL,ETC,SOL,BTG,ICP,NEO,FTT,UNI,LINK,LUNA,DOT,AVAX,WAVES,FLOW,CAKE,OKB,HNT,ATOM,HT,SUSHI,QTUM,SNX,KCS,RUNE,THETA,CEL,EOS,VGX,BNT,NEAR,XTZ,CELO,AUDIO,LEO,CRV,ADA,NEXO,KLAY,ENJ,STX,MATIC,MDX,XRP,MIOTA,ONT,ZRX,UST,DAI,USDT,BUSD,USDC,TUSD,PAX,GRT,ALGO,MANA,BAT,FTM,XLM,CHZ,TFUEL,DOGE,HBAR,XEM,RVN,CRO,XDC,VET,ZIL,ONE,TRX,DGB,AMP,TEL,SC,REV,HOT,BTT,SHIB'
 
 const UsdScreen = ({navigation}) => {
@@ -24,18 +26,19 @@ const UsdScreen = ({navigation}) => {
         try {
             const getCoin = async () => {    
                 let res = await axios.get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest', {
-                            headers: { 'X-CMC_PRO_API_KEY': 'a7a57837-ff05-4073-89ff-165fbcd744c8' }
+                            headers: { 'X-CMC_PRO_API_KEY': '0f674722-d83a-4a02-8c9a-42a64984e9d7' }
                         });
-                sortData(data, res)
+                // let res = await coinAPI.getAllCoins();
+                sortData(data, res);
                 let res1 = await axios.get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/info?symbol=' + symbol , {
-                            headers: { 'X-CMC_PRO_API_KEY': 'a7a57837-ff05-4073-89ff-165fbcd744c8' }
+                            headers: { 'X-CMC_PRO_API_KEY': '0f674722-d83a-4a02-8c9a-42a64984e9d7' }
                         });
-                setLink(res1.data.data)
+                setLink(res1.data.data);
                 // var s = ""
                 //  res.data.data.forEach(data => {
                 //     s += data.symbol + ","
                 //  });
-                //  console.log(res.data.data)
+                 console.log(res.data.data);
                 //  console.log(res1.data.data)
                 // console.log(res.data);
                 // console.log(res1.data.data['AAVE'].logo)
@@ -56,8 +59,8 @@ const UsdScreen = ({navigation}) => {
                 data = {data.filter(a => (a.name.toLowerCase()).includes(searchText.toLowerCase())
                                             || (a.symbol.toLowerCase()).includes(searchText.toLowerCase())
                     )}
-                // onPress = {() => navigation.navigate('CoinScreen')}
-                onPress = {() => console.log(link['AAVE'].logo)}
+                onPress = {(item, logo) => navigation.navigate('CoinScreen', {dataSingleCoin: item, logoCoin: logo})}
+                // onPress = {() => console.log(link['AAVE'].logo)}
                 logoLink = {link}
             />
 

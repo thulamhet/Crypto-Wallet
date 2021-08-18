@@ -1,4 +1,4 @@
-export const APIConfig = {
-    baseURL: 'https://pro-api.coinmarketcap.com/v1',
-    key: '7786be7f-5d4f-4992-bd56-3d48359a252a'
+export const APIconfig = {
+    baseURL: 'https://pro-api.coinmarketcap.com/v1/cryptocurrency',
+    key: '0f674722-d83a-4a02-8c9a-42a64984e9d7'
 };
