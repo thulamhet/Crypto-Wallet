@@ -3,12 +3,12 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { View, Text, Image, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
-import icons from './app/themes/icons'
-import colors from './app/themes/colors'
+import icons from './src/themes/icons'
+import colors from './src/themes/colors'
 import VolumeScreen from './src/screens/VolumeScreen';
 import PopularScreen from './src/screens/PopularScreen';
 import UsdScreen from './src/screens/UsdScreen'
-
+import CoinScreen from './src/screens/CoinScreen'
 //token : 26xmBUNvXvP_28AsyhyV
 
 const Tab = createMaterialTopTabNavigator();
@@ -19,9 +19,19 @@ export const SearchContext = createContext({
     setSearchText: (data: string) => {},
   });
 
+
+function Home() {
+    return (
+        <Tab.Navigator>
+            <Tab.Screen name="USD" component={UsdScreen} />
+            <Tab.Screen name="Volume" component={VolumeScreen} />
+            <Tab.Screen name="Popular" component={PopularScreen} />
+        </Tab.Navigator>
+    );
+}
+
 function App() {
     const [searchText, setSearchText] = useState('');
-    const [isLoggedIn, setLoggedIn] = useState(false);
 
     return (  
         <SearchContext.Provider value={{searchText, setSearchText}}>
@@ -62,13 +72,15 @@ function App() {
                         onChangeText={setSearchText}
                     />
                 </View>
-                <Tab.Navigator 
-                    // screenOptions={{headerShown: false}}
-                >
-                    <Tab.Screen name="USD" component={UsdScreen} initialParams={{searchText}}/>
-                    <Tab.Screen name="Volume" component={VolumeScreen}/>
-                    <Tab.Screen name="Popular" component={PopularScreen} />
-                </Tab.Navigator>
+
+                <Stack.Navigator>
+                    <Stack.Screen
+                        name="Home"
+                        component={Home}
+                        options={{ headerShown: false }}
+                    />
+                    <Stack.Screen name="CoinScreen" component={CoinScreen} />
+                </Stack.Navigator>
             </NavigationContainer>
         </SearchContext.Provider>
     )

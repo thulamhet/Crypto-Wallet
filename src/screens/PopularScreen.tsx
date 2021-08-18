@@ -1,13 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { SafeAreaView, View, Text, Image, StyleSheet, TextInput, TouchableOpacity, FlatList } from "react-native";
-import colors from '../../app/themes/colors'
-import icons from '../../app/themes/icons'
+import colors from '../themes/colors'
 import axios from 'axios'
 import CustomListCoin from '../components/CustomListCoin';
 import { SearchContext } from '../../App';
+const symbol = 'BTCB,WBTC,BTC,YFI,MKR,ETH,BCH,COMP,AAVE,BNB,KSM,XMR,DASH,LTC,DCR,BSV,QNT,EGLD,ZEC,AXS,ZEN,FIL,ETC,SOL,BTG,ICP,NEO,FTT,UNI,LINK,LUNA,DOT,AVAX,WAVES,FLOW,CAKE,OKB,HNT,ATOM,HT,SUSHI,QTUM,SNX,KCS,RUNE,THETA,CEL,EOS,VGX,BNT,NEAR,XTZ,CELO,AUDIO,LEO,CRV,ADA,NEXO,KLAY,ENJ,STX,MATIC,MDX,XRP,MIOTA,ONT,ZRX,UST,DAI,USDT,BUSD,USDC,TUSD,PAX,GRT,ALGO,MANA,BAT,FTM,XLM,CHZ,TFUEL,DOGE,HBAR,XEM,RVN,CRO,XDC,VET,ZIL,ONE,TRX,DGB,AMP,TEL,SC,REV,HOT,BTT,SHIB'
+
 const PopularScreen = () => {
     const [data, setdata] = useState([]);
-
+    const [link, setLink] = useState([])
     const sortData = (data: any, res: any) => {
         const data_temp = res.data.data;
         data_temp.sort((data1: any, data2: any) => data2.quote.USD.price - data1.quote.USD.price)
@@ -22,12 +23,10 @@ const PopularScreen = () => {
                 let res = await axios.get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest', {
                             headers: { 'X-CMC_PRO_API_KEY': 'a7a57837-ff05-4073-89ff-165fbcd744c8' }
                         });
-                // let res = await axios.get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/info', {
-                //             headers: { 'X-CMC_PRO_API_KEY': '0f674722-d83a-4a02-8c9a-42a64984e9d7' }
-                //         });
-                // let res = await axios.get('https://rest.coinapi.io/v1/assests', {
-                //             headers: { 'X-CoinAPI-Key': 'F122661C-4633-48AE-BACC-DF62838E7314' }
-                //         });
+                let res1 = await axios.get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/info?symbol=' + symbol , {
+                            headers: { 'X-CMC_PRO_API_KEY': 'a7a57837-ff05-4073-89ff-165fbcd744c8' }
+                        });
+                setLink(res1.data.data)
                 sortData(data, res)
     
             }
@@ -40,7 +39,9 @@ const PopularScreen = () => {
     return (
         <SafeAreaView style={styles.container}>
             {/* List Coin */}
-            <CustomListCoin data = {data.filter(a => (a.name.toLowerCase()).includes(searchText.toLowerCase()))}/>
+            <CustomListCoin data = {data.filter(a => (a.name.toLowerCase()).includes(searchText.toLowerCase()))}
+              onPress = {() => console.log(link['AAVE'].logo)}
+              logoLink = {link}/>
         </SafeAreaView>
     )
 }
