@@ -9,31 +9,25 @@ import AssestScreen from './src/screens/AssestScreen';
 const Stack = createStackNavigator();
 
 export const SearchContext = createContext({
-    searchText: '',
-    setSearchText: (data: string) => {},
-  });
+    searchText: ''
+});
 
 function App() {
-    const [searchText, setSearchText] = useState('');
 
-    return (  
-        <SearchContext.Provider value={{searchText, setSearchText}}>
-            <NavigationContainer>
-                <Stack.Navigator>
-                    <Stack.Screen
-                        name="Assest"
-                        component={AssestScreen}
-                        options={{ headerShown: false }}
-                    />
-                    <Stack.Screen 
-                        name="CoinScreen" 
-                        component={CoinScreen} 
-                        options={{ headerShown: false }}
-                    />
-                </Stack.Navigator>
-            </NavigationContainer>
-       </SearchContext.Provider>
-    )
-  }
+    return ( <NavigationContainer>
+        <Stack.Navigator>
+            <Stack.Screen
+                name="Assest"
+                component={AssestScreen}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name="CoinScreen"
+                component={CoinScreen}
+                options={{ headerShown: false }}
+            />
+        </Stack.Navigator>
+    </NavigationContainer>    )
+}
 
 export default App;

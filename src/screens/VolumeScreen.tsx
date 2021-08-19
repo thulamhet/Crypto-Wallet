@@ -15,7 +15,7 @@ const VolumeScreen = () => {
         setdata(data_temp)
     }
     const context = useContext(SearchContext);
-    const {searchText, setSearchText} = context;
+    const {searchText} = context;
 
     useEffect(() => {
         try {

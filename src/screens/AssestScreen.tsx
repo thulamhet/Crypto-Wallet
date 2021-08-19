@@ -10,13 +10,11 @@ import PopularScreen from '../../src/screens/PopularScreen';
 import UsdScreen from '../../src/screens/UsdScreen'
 import CoinScreen from '../../src/screens/CoinScreen'
 import { SearchContext } from '../../App';
+import Fonts from '../themes/fonts';
 //token : 26xmBUNvXvP_28AsyhyV
 
 const Tab = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
-
-
-
 
 function Home() {
     return (
@@ -32,7 +30,7 @@ function AssestScreen () {
     const [searchText, setSearchText] = useState('');
 
     return (  
-        <SearchContext.Provider value={{searchText, setSearchText}}>
+        <SearchContext.Provider value={{searchText}}>
                 {/* Title and Menu */}
                 <View style={{flexDirection: 'row'}}>
                     <TouchableOpacity>
@@ -85,7 +83,7 @@ export default AssestScreen;
 
 const styles = StyleSheet.create({
     title: {
-        fontFamily: 'Roboto-Black',
+        fontFamily: Fonts.black,
         fontSize: 20, 
         alignSelf: 'center',
         color: colors.black,

@@ -2,6 +2,7 @@ import React from 'react'
 import { TouchableOpacity } from 'react-native';
 import { View, Text, Image, StyleSheet, SafeAreaView } from 'react-native'
 import colors from '../themes/colors';
+import Fonts from '../themes/fonts';
 
 const CoinScreen : React.FC<{navigation: any, route: any}> = ({route, navigation}) => {
     const { dataSingleCoin, logoCoin } = route.params;
@@ -46,12 +47,11 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between'
     },
     nameView: {
-        fontFamily: 'Roboto-Bold'
+        fontFamily: Fonts.bold
     },
     symbolView: {
-        fontFamily: 'Roboto-Light'
+        fontFamily: Fonts.light
     }
-
 })
 
 export default CoinScreen;
