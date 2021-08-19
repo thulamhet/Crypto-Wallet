@@ -1,10 +1,10 @@
 import axios from 'axios';
-import { APIconfig } from "../configs/APIConfig";
+import { APIConfig } from "../configs/APIConfig";
 
 const axiosClient = axios.create({
-  baseURL: APIconfig.baseURL,
+  baseURL: APIConfig.baseURL,
   headers: {
-    'X-CMC_PRO_API_KEY': APIconfig.key,
+    'X-CMC_PRO_API_KEY': APIConfig.key,
   },
 });
 export default axiosClient;

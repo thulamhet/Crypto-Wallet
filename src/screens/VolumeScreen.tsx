@@ -8,7 +8,8 @@ const symbol = 'BTCB,WBTC,BTC,YFI,MKR,ETH,BCH,COMP,AAVE,BNB,KSM,XMR,DASH,LTC,DCR
 
 const VolumeScreen = () => {
     const [data, setdata] = useState([]);
-    const [link, setLink] = useState([])
+    const [link, setLink] = useState([]);
+    const [isRefreshing, setIsRefreshing] = useState(false);
     const sortData = (data: any, res: any) => {
         const data_temp = res.data.data;
         data_temp.sort((data1: any, data2: any) => data2.quote.USD.volume_24h - data1.quote.USD.volume_24h)
@@ -41,7 +42,10 @@ const VolumeScreen = () => {
             {/* List Coin */}
             <CustomListCoin data = {data.filter(a => (a.name.toLowerCase()).includes(searchText.toLowerCase()))}
             onPress = {() => console.log(link['AAVE'].logo)}
-            logoLink = {link}/>
+            logoLink = {link}
+            isRefreshing={isRefreshing}
+            />
+            
         </SafeAreaView>
     )
 }

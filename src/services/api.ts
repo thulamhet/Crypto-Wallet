@@ -2,9 +2,16 @@ import axiosClient from './axiosClient'
 
 function getAllCoins () {
     return axiosClient.get('/listings/latest')
+    .then((response) => response.data);
 }
 
- const coinAPI = {
-    getAllCoins,
+function getSymbolsInfo(symbols) {
+    return axiosClient.get(`/info?symbol=${symbols}`)
+    .then((response) => response.data);
 }
-export default coinAPI;
+
+ const CoinAPI = {
+    getAllCoins,
+    getSymbolsInfo
+}
+export default CoinAPI;
