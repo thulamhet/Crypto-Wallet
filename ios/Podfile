@@ -26,4 +26,6 @@ target 'CryptoWallet' do
   post_install do |installer|
     react_native_post_install(installer)
   end
+
+  pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
 end

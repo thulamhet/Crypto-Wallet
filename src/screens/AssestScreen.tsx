@@ -11,6 +11,7 @@ import UsdScreen from '../../src/screens/UsdScreen'
 import CoinScreen from '../../src/screens/CoinScreen'
 import { SearchContext } from '../../App';
 import Fonts from '../themes/fonts';
+import { SafeAreaView } from 'react-native-safe-area-context';
 //token : 26xmBUNvXvP_28AsyhyV
 
 const Tab = createMaterialTopTabNavigator();
@@ -26,13 +27,14 @@ function Home() {
     );
 }
 
-function AssestScreen () {
+function AssestScreen({ navigation }) {
     const [searchText, setSearchText] = useState('');
 
-    return (  
-        <SearchContext.Provider value={{searchText}}>
+    return (
+        <SearchContext.Provider value={{ searchText }}>
+            <SafeAreaView style={{ flex: 1 }}>
                 {/* Title and Menu */}
-                <View style={{flexDirection: 'row'}}>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     <TouchableOpacity>
                         <Image
                             source={icons.menu}
@@ -43,10 +45,22 @@ function AssestScreen () {
                             }}
                         />
                     </TouchableOpacity>
-            
+
                     <Text style={styles.title}>ThuCoin</Text>
+                    <TouchableOpacity onPress={() => {
+                        navigation.navigate('Graph');
+                    }}>
+                        <Image
+                            source={icons.menu}
+                            resizeMode="cover"
+                            style={{
+                                width: 30,
+                                height: 30,
+                            }}
+                        />
+                    </TouchableOpacity>
                 </View>
-                
+
                 {/* Search */}
                 <View style={styles.searchCoin}>
                     <TouchableOpacity>
@@ -67,7 +81,6 @@ function AssestScreen () {
                         onChangeText={setSearchText}
                     />
                 </View>
-
                 <Stack.Navigator>
                     <Stack.Screen
                         name="Home"
@@ -75,28 +88,31 @@ function AssestScreen () {
                         options={{ headerShown: false }}
                     />
                 </Stack.Navigator>
+            </SafeAreaView>
         </SearchContext.Provider>
     )
-  }
+}
 
 export default AssestScreen;
 
 const styles = StyleSheet.create({
     title: {
         fontFamily: Fonts.black,
-        fontSize: 20, 
+        fontSize: 20,
         alignSelf: 'center',
         color: colors.black,
-        marginLeft: 120
+        // marginLeft: 120
     },
     searchCoin: {
-        flexDirection: 'row', 
-        alignItems: 'center', 
-        borderRadius: 20, 
-        borderWidth:1, 
-        borderColor:colors.gray, 
-        margin: 10
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderRadius: 20,
+        borderWidth: 1,
+        borderColor: colors.gray,
+        margin: 10,
+        minHeight: 36,
+        paddingHorizontal: 8
     },
-   
+
 })
 

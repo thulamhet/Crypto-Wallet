@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import CoinScreen from './src/screens/CoinScreen'
 import AssestScreen from './src/screens/AssestScreen';
+import TestGraphScreen from './src/screens/TestGraphScreen';
 //token : 26xmBUNvXvP_28AsyhyV
 
 const Stack = createStackNavigator();
@@ -14,7 +15,7 @@ export const SearchContext = createContext({
 
 function App() {
 
-    return ( <NavigationContainer>
+    return (<NavigationContainer>
         <Stack.Navigator>
             <Stack.Screen
                 name="Assest"
@@ -26,8 +27,12 @@ function App() {
                 component={CoinScreen}
                 options={{ headerShown: false }}
             />
+            <Stack.Screen
+                name="Graph"
+                component={TestGraphScreen}
+            />
         </Stack.Navigator>
-    </NavigationContainer>    )
+    </NavigationContainer>)
 }
 
 export default App;
