@@ -5,13 +5,15 @@ import { View, Text, Image, StyleSheet, SafeAreaView, processColor } from 'react
 import axios from 'axios'
 import colors from '../themes/colors';
 import Fonts from '../themes/fonts';
+import CoinAPI from '../services/api';
+
 
 
 const CoinScreen : React.FC<{navigation: any, route: any}> = ({route, navigation}) => {
     const { dataSingleCoin, logoCoin } = route.params;
     const [data, setData] = useState([]);
     const [sourceData, setsourceData] = useState([]);
-    const [btn1DBgColor, setbtn1DBgColor]  = useState(colors.lightGray);
+    const [btn1DBgColor, setbtn1DBgColor]  = useState(colors.gray);
     const [btn7DBgColor, setbtn7DBgColor]  = useState(colors.lightGray);
     const [btn1MBgColor, setbtn1MBgColor]  = useState(colors.lightGray);
     const [btn3MBgColor, setbtn3MBgColor]  = useState(colors.lightGray);
@@ -33,6 +35,7 @@ const CoinScreen : React.FC<{navigation: any, route: any}> = ({route, navigation
         })
         return lowestPrice;
     }
+
     const getHighestPrice = (data: Array<any>) => { 
         let highestPrice = data[0]?.price_high;
         data.map((item) => { 
@@ -40,6 +43,7 @@ const CoinScreen : React.FC<{navigation: any, route: any}> = ({route, navigation
         })
         return highestPrice;
     }
+
     const getVolumeTradedPrice = (data: Array<any>) => { 
         let volPrice = 0;
         data.map((item) => { 
@@ -65,16 +69,15 @@ const CoinScreen : React.FC<{navigation: any, route: any}> = ({route, navigation
                 break;
         }
         try {
-            let res = await axios.get(`https://rest.coinapi.io/v1/ohlcv/${dataSingleCoin.symbol}/USD/latest?period_id=${period_id}`, {
-                    // headers: { 'X-CoinAPI-Key': '17798182-2745-4592-AFAB-ACADE1199AD5' }
-                    // headers: { 'X-CoinAPI-Key': 'E55F2DDE-FBA9-456A-BD23-FBB25FAF60C4' }
-                    //BA4A14B6-5AD3-4B79-93AC-35022A37B9F7x
-                    headers: { 'X-CoinAPI-Key': 'F2C73555-75F2-42F3-B5F5-BF2FC0F2A911' }
-                });
-            setData(filterData(res.data))
-            setsourceData(res.data)
-        } catch (e) {
-            console.log(e);
+            let res = await CoinAPI.getPeriodCoins(dataSingleCoin.symbol, period_id);
+            if (res) {
+                setData(filterData(res))
+                setsourceData(res)
+            } else { 
+                console.log('Failed to get period')
+            }
+        } catch (error) {
+            console.log(error);
         }
     }
 
