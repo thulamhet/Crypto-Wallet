@@ -33,14 +33,7 @@ const UsdScreen = ({ navigation }) => {
                     headers: { 'X-CMC_PRO_API_KEY': '0f674722-d83a-4a02-8c9a-42a64984e9d7' }
                 });
                 setLink(res1.data.data);
-                // var s = ""
-                //  res.data.data.forEach(data => {
-                //     s += data.symbol + ","
-                //  });
-                console.log(res.data.data);
-                //  console.log(res1.data.data)
-                // console.log(res.data);
-                // console.log(res1.data.data['AAVE'].logo)
+        
             }
 
             getCoin();

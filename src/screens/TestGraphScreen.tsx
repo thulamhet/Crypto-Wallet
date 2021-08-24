@@ -11,7 +11,7 @@ export default class TestGraphScreen extends React.Component {
             <View style={{ flex: 1 }}>
                 <View style={styles.container}>
                     <LineChart style={styles.chart}
-                        data={{ dataSets: [{ label: "demo", values: [{ y: 1 }, { y: 2 }, { y: 1 }] }] }}
+                        data={{ dataSets: [{ label: "demo", values: [{ y: 1 }, { y: 2 }, { y: 1 },{ y: 1 }, { y: 2 }, { y: 1 }, {y:2},] }] }}
                     />
                 </View>
             </View>

@@ -46,7 +46,7 @@ function AssestScreen({ navigation }) {
                         />
                     </TouchableOpacity>
 
-                    <Text style={styles.title}>ThuCoin</Text>
+                    <Text style={styles.title}>Thu1Coin</Text>
                     <TouchableOpacity onPress={() => {
                         navigation.navigate('Graph');
                     }}>
@@ -71,6 +71,7 @@ function AssestScreen({ navigation }) {
                             style={{
                                 width: 20,
                                 height: 20,
+                                marginRight: 8
                             }}
                         />
                     </TouchableOpacity>

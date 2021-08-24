@@ -5,13 +5,16 @@
  * @format
  */
 
-module.exports = {
+ module.exports = {
   transformer: {
     getTransformOptions: async () => ({
       transform: {
         experimentalImportSupport: false,
-        inlineRequires: true,
+        inlineRequires: false,
       },
     }),
+    getTransformModulePath: () => {
+      return require.resolve('./transformer');
+    },
   },
 };

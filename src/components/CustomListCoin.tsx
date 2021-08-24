@@ -66,9 +66,9 @@ const styles = StyleSheet.create({
         height: 70,
         borderWidth: 0.34,
         marginTop: 2,
-        borderColor: colors.black,
+        borderColor: colors.lightGray,
         flexDirection: 'row',
-        backgroundColor: colors.gray,
+        backgroundColor: colors.white,
         justifyContent: 'space-between'
     }
 })

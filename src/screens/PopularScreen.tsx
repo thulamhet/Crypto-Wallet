@@ -26,12 +26,12 @@ const PopularScreen = () => {
                 setLink(res1.data)
             }
             else {
-                //TODO Báo lỗi lấy dữ liệu thất bại
+                //TODO: Báo lỗi lấy dữ liệu thất bại
             }
 
         } catch (error) {
             console.log(error);
-            //TODO Báo lỗi lấy dữ liệu thất bại
+            //TODO: Báo lỗi lấy dữ liệu thất bại
         }
         finally {
             setIsRefreshing(false);
