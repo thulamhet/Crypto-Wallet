@@ -20,12 +20,16 @@ const CoinScreen : React.FC<{navigation: any, route: any}> = ({route, navigation
     const [period, setperiod] = useState('');
 
     const filterData = (data : Array<any>) => { 
-        let tmp = [];
-        for(let i = 0; i < data.length; i++) {
-            const item = {y: data[i].price_close, x : i }
-            tmp.push(item)
-        }
-        return tmp;
+        // let tmp = [];
+        // for(let i = 0; i < data.length; i++) {
+        //     const item = {y: data[i].price_close, x : i }
+        //     tmp.push(item)
+        // }
+
+        const filteredData = data.map((element, index) => { 
+            element = {y: element.price_close, x: index}
+        })
+        return filteredData;
     }
 
     const getLowestPrice = (data: Array<any>) => { 
