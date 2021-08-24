@@ -47,17 +47,22 @@ const CoinScreen : React.FC<{navigation: any, route: any}> = ({route, navigation
         })
         return volPrice;
     }
+
     const getData = async (period: String) => { 
         let period_id : String;
         switch (period) {
             case '1D':
                 period_id = '15MIN';
+                break;
             case '7D':
                 period_id = '2HRS';
+                break;
             case '1M':
                 period_id = '8HRS';
+                break;
             default:
                 period_id = '1DAY';
+                break;
         }
         try {
             let res = await axios.get(`https://rest.coinapi.io/v1/ohlcv/${dataSingleCoin.symbol}/USD/latest?period_id=${period_id}`, {
@@ -68,14 +73,13 @@ const CoinScreen : React.FC<{navigation: any, route: any}> = ({route, navigation
                 });
             setData(filterData(res.data))
             setsourceData(res.data)
-            console.log(res.data)
         } catch (e) {
             console.log(e);
         }
     }
 
     useEffect(() => { 
-        getData(period);
+        // getData(period);
     }, [period])
 
     return (
@@ -129,7 +133,7 @@ const CoinScreen : React.FC<{navigation: any, route: any}> = ({route, navigation
                         style={styles.chart}
                         data={{
                         dataSets: [
-                            {
+                            {   
                                 values: data,
                                 label: '',
                                 config: {
