@@ -82,7 +82,7 @@ const CoinScreen : React.FC<{navigation: any, route: any}> = ({route, navigation
     }
 
     useEffect(() => { 
-        // getData(period);
+        getData(period);
     }, [period])
 
     return (
