@@ -11,7 +11,6 @@ function getSymbolsInfo(symbols) {
 }
 
 function getPeriodCoins (symbol, period_id) { 
-    console.log(symbol, period_id);
     return axiosClient.axiosClientCoinAPI.get(`/${symbol}/USD/latest?period_id=${period_id}`)
     .then((response) => response.data);
 }

@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { LineChart } from 'react-native-charts-wrapper';
 import { View, Text, Image, StyleSheet, SafeAreaView, processColor } from 'react-native';
-import axios from 'axios'
 import colors from '../themes/colors';
 import Fonts from '../themes/fonts';
 import CoinAPI from '../services/api';
+import icons from '../themes/icons';
 
 
 
@@ -20,39 +20,27 @@ const CoinScreen : React.FC<{navigation: any, route: any}> = ({route, navigation
     const [period, setperiod] = useState('');
 
     const filterData = (data : Array<any>) => { 
-        // let tmp = [];
-        // for(let i = 0; i < data.length; i++) {
-        //     const item = {y: data[i].price_close, x : i }
-        //     tmp.push(item)
-        // }
-
-        const filteredData = data.map((element, index) => { 
-            element = {y: element.price_close, x: index}
-        })
+        const filteredData = data.map((element, index) => (
+            {y: element.price_close, x: index}
+        ))
         return filteredData;
     }
 
     const getLowestPrice = (data: Array<any>) => { 
         let lowestPrice = data[0]?.price_low;
-        data.map((item) => { 
-            lowestPrice = item.price_low < lowestPrice ? item.price_low : lowestPrice;
-        })
+        data.forEach((item) => lowestPrice = item.price_low < lowestPrice ? item.price_low : lowestPrice);
         return lowestPrice;
     }
 
     const getHighestPrice = (data: Array<any>) => { 
         let highestPrice = data[0]?.price_high;
-        data.map((item) => { 
-            highestPrice = item.price_low < highestPrice ? item.price_high : highestPrice;
-        })
+        data.forEach((item) => highestPrice = item.price_low < highestPrice ? item.price_high : highestPrice);
         return highestPrice;
     }
 
     const getVolumeTradedPrice = (data: Array<any>) => { 
         let volPrice = 0;
-        data.map((item) => { 
-            volPrice += item.volume_traded;
-        })
+        data.forEach((item) => volPrice += item.volume_traded)
         return volPrice;
     }
 
@@ -78,6 +66,7 @@ const CoinScreen : React.FC<{navigation: any, route: any}> = ({route, navigation
                 setData(filterData(res))
                 setsourceData(res)
             } else { 
+                //Them alert
                 console.log('Failed to get period')
             }
         } catch (error) {
@@ -93,9 +82,18 @@ const CoinScreen : React.FC<{navigation: any, route: any}> = ({route, navigation
         <SafeAreaView style={styles.container}>
             <View style={styles.headView}>
                 <View style={{flexDirection: 'row'}}>
-                    <TouchableOpacity
+                    <TouchableOpacity 
+                        style={{justifyContent: 'center'}}
                         onPress={()=> navigation.navigate('Home')}
+                        
                     >
+                        <Image
+                            style={styles.back_iconImg}
+                            source={icons.back}
+                        />
+                    </TouchableOpacity>
+                    
+                    <TouchableOpacity>
                         <Image
                             style={styles.iconImg}
                             source={{uri: logoCoin}}
@@ -124,10 +122,12 @@ const CoinScreen : React.FC<{navigation: any, route: any}> = ({route, navigation
                     <Text style={{color: colors.gray}}>Low</Text>
                     <Text>${getLowestPrice(sourceData)?.toFixed(2)}</Text>
                 </View>
+
                 <View>
                     <Text style={{color: colors.gray}}>High</Text>
                     <Text>${getHighestPrice(sourceData)?.toFixed(2)}</Text>
                 </View>
+
                 <View>
                     <Text style={{color: colors.gray}}>Vol</Text>
                     <Text>${getVolumeTradedPrice(sourceData)?.toFixed(2)}</Text>
@@ -142,7 +142,7 @@ const CoinScreen : React.FC<{navigation: any, route: any}> = ({route, navigation
                         dataSets: [
                             {   
                                 values: data,
-                                label: '',
+                                label: 'Coin Graph',
                                 config: {
                                     mode: 'CUBIC_BEZIER',
                                     drawValues: false,
@@ -153,7 +153,7 @@ const CoinScreen : React.FC<{navigation: any, route: any}> = ({route, navigation
                                     circleRadius: 5,
                                     highlightColor: processColor(colors.black),
                                     color: processColor(colors.petrel),
-                                    drawFilled: true,
+                                    drawFilled: false,
                                     fillGradient: {
                                     colors: [processColor(colors.petrel), processColor(colors.greenBlue)],
                                     positions: [0, 0.5],
@@ -176,7 +176,7 @@ const CoinScreen : React.FC<{navigation: any, route: any}> = ({route, navigation
                             textColor: processColor(colors.black),
                         }}
                         xAxis={{
-                            enabled: true,
+                            enabled: false,
                             granularity: 1, // độ chi tiết
                             drawLabels: true,
                             position: 'BOTTOM',
@@ -331,6 +331,12 @@ const styles = StyleSheet.create({
         borderRadius: 7,
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    back_iconImg: { 
+        width: 20,
+        height: 20,
+        borderRadius: 50,
+        marginLeft: 5,
     }
 })
 

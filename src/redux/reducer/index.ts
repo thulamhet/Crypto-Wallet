@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
 
-import searchReducer from "./searchReducer"
+import pinReducer from "./pinReducer"
 
-export default combineReducers({searchReducer});
+
+export default combineReducers({pinReducer});

@@ -25,7 +25,6 @@ const UsdScreen = ({navigation}) => {
                 const symbols = sortedAssets.map((asset) => asset.symbol).join(',');
                 let res1 = await CoinAPI.getSymbolsInfo(symbols);
                 setLink(res1.data)
-                console.log('xxx')
             }
             else {
                 //TODO: Báo lỗi lấy dữ liệu thất bại

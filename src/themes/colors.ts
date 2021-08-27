@@ -7,5 +7,6 @@ export default {
     gray: "#8b9097",
     red: "#e02209",
     greenBlue : 'rgb(26, 182, 151)',
-    petrel : 'rgb(59, 145, 153)'
+    petrel : 'rgb(59, 145, 153)',
+    charcoal: '#1E1B26'
 }

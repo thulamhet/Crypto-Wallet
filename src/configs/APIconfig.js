@@ -13,4 +13,4 @@ export const APIConfig = {
                     // headers: { 'X-CoinAPI-Key': 'E55F2DDE-FBA9-456A-BD23-FBB25FAF60C4' }
                     //BA4A14B6-5AD3-4B79-93AC-35022A37B9F7x
                     // headers: { 'X-CoinAPI-Key': 'F2C73555-75F2-42F3-B5F5-BF2FC0F2A911' }
-
+                    //A26EED76-9940-45AD-9388-DD732D53A650
