@@ -9,6 +9,7 @@ import SInfo from 'react-native-sensitive-info';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { connect } from 'react-redux';
 import { changePin } from '../redux/action/pinAction';
+import constants from '../constants/constant';
 
 // Data successfully deleted
 
@@ -30,11 +31,7 @@ const CustomEnterPin: React.FC<CustomEnterPinProps> = ({modalVisible, setmodalVi
     let pinData : string;
 
     const savePin = async (pin: string) => { 
-        pinData = await SInfo.setItem("key1", pin, {
-            sharedPreferencesName: "mySharedPrefs",
-            keychainService: "myKeychain",
-          });
-          
+        pinData = await SInfo.setItem("key1", pin, constants.keyStore);
         console.log(pinData);     
     }
 
@@ -54,7 +51,6 @@ const CustomEnterPin: React.FC<CustomEnterPinProps> = ({modalVisible, setmodalVi
             <Modal
                 animationType="slide"
                 transparent={true}
-                //TODO : FIXME
                 visible={modalVisible}
                 onRequestClose={() => {
                     Alert.alert("Modal has been closed.");

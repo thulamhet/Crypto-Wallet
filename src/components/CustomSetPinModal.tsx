@@ -9,8 +9,7 @@ import SInfo from 'react-native-sensitive-info';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { connect } from 'react-redux';
 import { changePin } from '../redux/action/pinAction';
-
-// Data successfully deleted
+import constants from '../constants/constant';
 
 type CustomSetPinProps = {
     modalVisible: boolean,
@@ -26,46 +25,16 @@ const CustomSetPin: React.FC<CustomSetPinProps> = ({modalVisible, setmodalVisibl
     const [text, setText] = useState('');
     const [pin, setPin] = useState('');
     const [pinText, setpinText] = useState(NHAP_PIN);
-    
-    // const storeData = async (value: string) => {
-    //     try {
-    //       await AsyncStorage.setItem('@storage_Key', value)
-    //       console.log('save succeed')
-    //     } catch (error) {
-    //         console.log(error);
-    //         Alert.alert(error);
-    //     }
-    // }
-
-    // const getData = async (key: string) => { 
-    //     try { 
-    //         const value = await AsyncStorage.getItem(key);
-    //         if(value !== null) { 
-    //             console.log(value)
-    //         }
-    //     } catch(error) { 
-    //         console.log(error);
-    //         Alert.alert(error);
-    //     }
-    // }
 
     let pinData : string;
 
     const savePin = async (pin: string) => { 
-        pinData = await SInfo.setItem("key1", pin, {
-            sharedPreferencesName: "mySharedPrefs",
-            keychainService: "myKeychain",
-          });
-          
+        pinData = await SInfo.setItem("key1", pin, constants.keyStore);    
         console.log(pinData);     
     }
 
     const getPin = async () => {
-        const gettingPin = await SInfo.getItem("key1", {
-            sharedPreferencesName: "mySharedPrefs",
-            keychainService: "myKeychain",
-          });
-          
+        const gettingPin = await SInfo.getItem("key1",constants.keyStore);
         console.log(gettingPin); 
     }
     
@@ -74,7 +43,6 @@ const CustomSetPin: React.FC<CustomSetPinProps> = ({modalVisible, setmodalVisibl
             <Modal
                 animationType="slide"
                 transparent={true}
-                //TODO : FIXME
                 visible={modalVisible}
                 onRequestClose={() => {
                     Alert.alert("Modal has been closed.");

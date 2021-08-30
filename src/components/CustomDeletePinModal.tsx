@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {Modal, Alert, TouchableOpacity, Text, StyleSheet, Image, View} from 'react-native';
 import colors from '../themes/colors';
 import RNSInfo from 'react-native-sensitive-info';
 import SInfo from 'react-native-sensitive-info';
 import icons from '../themes/icons';
+import CustomEnterPin from './CustomEnterPinModal';
+import constants from '../constants/constant';
 
 type CustomDeletePinProps = { 
     modalVisible: boolean,
@@ -11,24 +13,17 @@ type CustomDeletePinProps = {
 }
 
 const XOA_PIN = 'XÓA PIN';
+
 const deletePin = async () => {
-        const value = await SInfo.deleteItem('key1', {
-            sharedPreferencesName: 'mySharedPrefs',
-            keychainService: 'myKeychain'
-        });
-        console.log(value)
-}
-const getPin = async () => {
-    const gettingPin = await SInfo.getItem("key1", {
-        sharedPreferencesName: "mySharedPrefs",
-        keychainService: "myKeychain",
-      });
-      
-    console.log(gettingPin); 
+    const value = await SInfo.deleteItem('key1', constants.keyStore);
 }
 
+const getPin = async () => {
+    const gettingPin = await SInfo.getItem("key1", constants.keyStore);
+}
 
 const CustomDeletePin : React.FC<CustomDeletePinProps> = ({modalVisible, setmodalVisible}) => { 
+    const [enterPinVisible, setEnterPinVisible] = useState(false);
     return (
         <Modal
             animationType="slide"
@@ -39,29 +34,42 @@ const CustomDeletePin : React.FC<CustomDeletePinProps> = ({modalVisible, setmoda
                 setmodalVisible(modalVisible);
             }}
         >   
+            {/* Enter Pin */}
+            <CustomEnterPin
+                modalVisible={enterPinVisible}
+                setmodalVisible={setEnterPinVisible}
+            />
+
+            {/* Delete Touchable */}
             <TouchableOpacity
                 style={styles.modalView}
                 onPress={() => {
-                    setmodalVisible(!modalVisible);
+                    console.log(enterPinVisible);
+                    setEnterPinVisible(!enterPinVisible);
+                    console.log(enterPinVisible);
+                    
+                    //TODO: Xử lý nhập pin đúng thì mới xóa pin
                     deletePin();
-                    getPin();
                 }}
             >   
                 <View>
+                    {/* Close modal */}
                     <TouchableOpacity
-                                onPress={() => setmodalVisible(!modalVisible)}
-                            >
-                                <Image
-                                    style={{
-                                        resizeMode: 'cover',
-                                        width:20,
-                                        height:20,
-                                        borderRadius: 50,
-                                        margin: 2
-                                    }}
-                                    source={icons.close}
-                                />
-                            </TouchableOpacity>
+                        onPress={() => {
+                            setmodalVisible(!modalVisible);
+                        }}
+                    >
+                        <Image
+                            style={{
+                                resizeMode: 'cover',
+                                width:20,
+                                height:20,
+                                borderRadius: 50,
+                                margin: 2
+                            }}
+                            source={icons.close}
+                        />
+                    </TouchableOpacity>
                     <Text style={styles.textView}>{XOA_PIN}</Text>
                 </View>
             </TouchableOpacity>

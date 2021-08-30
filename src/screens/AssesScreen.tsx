@@ -3,18 +3,19 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { AppState, View, Text, Image, TouchableOpacity, StyleSheet,Modal, TextInput } from 'react-native';
-import icons from '../../src/themes/icons'
-import colors from '../../src/themes/colors'
-import VolumeScreen from '../../src/screens/VolumeScreen';
-import PopularScreen from '../../src/screens/PopularScreen';
-import UsdScreen from '../../src/screens/UsdScreen'
+import icons from '../themes/icons'
+import colors from '../themes/colors'
+import VolumeScreen from './VolumeScreen';
+import PopularScreen from './PopularScreen';
+import UsdScreen from './UsdScreen'
 import { SearchContext } from '../../App';
 import Fonts from '../themes/fonts';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import CustomSetPin from '../components/CustomSetPin';
+import CustomSetPin from '../components/CustomSetPinModal';
 import SInfo from 'react-native-sensitive-info';
-import CustomDeletePin from '../components/CustomDeletePin';
-import CustomEnterPin from '../components/CustomEnterPin';
+import CustomDeletePin from '../components/CustomDeletePinModal';
+import CustomEnterPin from '../components/CustomEnterPinModal';
+import constants from '../constants/constant';
 
 
 const Tab = createMaterialTopTabNavigator();
@@ -31,7 +32,7 @@ function Home() {
 }
 
 
-function AssestScreen({ navigation }) {
+function AssesScreen({ navigation }) {
     const [searchText, setSearchText] = useState('');
     const [pinModalVisible, setPinModalVisible] = useState(false);
     const [removePinVisible, setRemovePinVisible] = useState(false);
@@ -51,10 +52,7 @@ function AssestScreen({ navigation }) {
 
     useEffect(() => { 
         const getPin = async () => {
-            const gettingPin = await SInfo.getItem("key1", {
-                sharedPreferencesName: "mySharedPrefs",
-                keychainService: "myKeychain",
-            });
+            const gettingPin = await SInfo.getItem("key1", constants.keyStore);
             if(gettingPin !== undefined) {
                 setEnterPinVisible(!enterPinVisible)
             }
@@ -74,16 +72,15 @@ function AssestScreen({ navigation }) {
 
                 }
                 console.log("AppState", appState.current);
+                return () => {
+                    subscription.remove();
+                  };
             });
         
     }, [])
 
     const getPin = async () => {
-        const gettingPin = await SInfo.getItem("key1", {
-            sharedPreferencesName: "mySharedPrefs",
-            keychainService: "myKeychain",
-        });
-
+        const gettingPin = await SInfo.getItem("key1", constants.keyStore);
         if(gettingPin === undefined) {
            setCheckPin(true) ;
         } else setCheckPin(false) ;
@@ -108,7 +105,6 @@ function AssestScreen({ navigation }) {
                 <View style={{ flexDirection: 'row' }}>
                     <TouchableOpacity
 
-                    //TODO: AN MENU O DAY
                         onPress={() => {
                             getPin();
                             // Có pin rồi thì vào modal xóa pin
@@ -163,7 +159,7 @@ function AssestScreen({ navigation }) {
     )
 }
 
-export default AssestScreen;
+export default AssesScreen;
 
 const styles = StyleSheet.create({
     title: {

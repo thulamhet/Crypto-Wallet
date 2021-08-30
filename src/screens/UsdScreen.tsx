@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { SafeAreaView, View, Text, Image, StyleSheet, TextInput, TouchableOpacity, FlatList } from "react-native";
 import colors from '../themes/colors'
 import axios from 'axios'
-import CustomListCoin from '../components/CustomListCoin';
+import CustomListCoin from '../components/CustomListCoinModal';
 import { SearchContext } from '../../App';
 import { useMemo } from 'react';
 import CoinAPI from '../services/api';

@@ -3,7 +3,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import CoinScreen from './src/screens/CoinScreen'
-import AssestScreen from './src/screens/AssestScreen';
+import AssesScreen from './src/screens/AssesScreen';
+import PortfolioScreen from './src/screens/PortfolioScreen';
 //token : 26xmBUNvXvP_28AsyhyV
 
 const Stack = createStackNavigator();
@@ -16,9 +17,14 @@ function App() {
     return (   
         <NavigationContainer>
                 <Stack.Navigator>
+                    {/* <Stack.Screen
+                        name="Portfolio"
+                        component={PortfolioScreen}
+                        options={{ headerShown: false }}
+                    /> */}
                     <Stack.Screen
-                        name="Assest"
-                        component={AssestScreen}
+                        name="Asses"
+                        component={AssesScreen}
                         options={{ headerShown: false }}
                     />
                     <Stack.Screen
