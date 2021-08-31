@@ -40,8 +40,9 @@ const CustomEnterPin: React.FC<CustomEnterPinProps> = ({modalVisible, setmodalVi
             sharedPreferencesName: "mySharedPrefs",
             keychainService: "myKeychain",
           });
-          setPin(gettingPin);
+        setPin(gettingPin);
     }
+
     useEffect(() => { 
         getPin()
     },[])
@@ -125,7 +126,7 @@ const CustomEnterPin: React.FC<CustomEnterPinProps> = ({modalVisible, setmodalVi
                                         }
                                     }}
                                     disabled={!(text !== '')}
-                                    value={text}
+                                    // value={text}
                                  >
                                     <Text style={{color: colors.white}}>OK</Text>
                                 </TouchableOpacity>

@@ -17,7 +17,6 @@ import CustomDeletePin from '../components/CustomDeletePinModal';
 import CustomEnterPin from '../components/CustomEnterPinModal';
 import constants from '../constants/constant';
 
-
 const Tab = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
 
@@ -31,7 +30,6 @@ function Home() {
     );
 }
 
-
 function AssesScreen({ navigation }) {
     const [searchText, setSearchText] = useState('');
     const [pinModalVisible, setPinModalVisible] = useState(false);
@@ -39,45 +37,8 @@ function AssesScreen({ navigation }) {
     const [enterPinVisible, setEnterPinVisible] = useState(false);
     const [checkPin, setCheckPin] = useState(false);
 
-
     const appState = useRef(AppState.currentState);
     const [appStateVisible, setAppStateVisible] = useState(appState.current);
-
-    useEffect(() => {
-        getPin();
-        // console.log(appState.current)
-    }, [pinModalVisible, removePinVisible])
-
-    
-
-    useEffect(() => { 
-        const getPin = async () => {
-            const gettingPin = await SInfo.getItem("key1", constants.keyStore);
-            if(gettingPin !== undefined) {
-                setEnterPinVisible(!enterPinVisible)
-            }
-        }
-        getPin();
-            const subscription = AppState.addEventListener("change", nextAppState => {
-                if (
-                    appState.current.match(/inactive|background/) &&
-                    nextAppState === "active"
-                  ) {
-                    console.log("App has come to the foreground!");
-                  }
-            
-                appState.current = nextAppState;
-                if(appState.current === 'background') {
-                    getPin();
-
-                }
-                console.log("AppState", appState.current);
-                return () => {
-                    subscription.remove();
-                  };
-            });
-        
-    }, [])
 
     const getPin = async () => {
         const gettingPin = await SInfo.getItem("key1", constants.keyStore);
@@ -85,6 +46,44 @@ function AssesScreen({ navigation }) {
            setCheckPin(true) ;
         } else setCheckPin(false) ;
     }
+
+    useEffect(() => {
+        //Xu ly khi co pin r thi an vao menu ra remove pin va nguoc lai
+        getPin();
+        // console.log(appState.current)
+    }, [pinModalVisible, removePinVisible])
+
+    useEffect(() => { 
+        //Xu ly khi app render lan dau
+        const getPin = async () => {
+            const gettingPin = await SInfo.getItem("key1", constants.keyStore);
+            if(gettingPin !== undefined) {
+                setEnterPinVisible(!enterPinVisible)
+            }
+        }
+        getPin();
+
+        //Xu ly khi app xuong background
+        const subscription = AppState.addEventListener("change", nextAppState => {
+            if (
+                appState.current.match(/inactive|background/) &&
+                nextAppState === "active"
+                ) {
+                console.log("App has come to the foreground!");
+                }
+        
+            appState.current = nextAppState;
+            if(appState.current === 'background') {
+                getPin();
+            }
+            console.log("AppState", appState.current);
+            return () => {
+                subscription.remove();
+                };
+        });
+        
+    }, [])
+
     
     return (
         <SearchContext.Provider value={{ searchText }}>
@@ -177,7 +176,8 @@ const styles = StyleSheet.create({
         borderColor: colors.gray,
         margin: 10,
         minHeight: 36,
-        paddingHorizontal: 8
+        paddingHorizontal: 8,
+    
     },
 
 })

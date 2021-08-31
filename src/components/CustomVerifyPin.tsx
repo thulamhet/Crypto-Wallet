@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { AppState, Alert, Modal, StyleSheet, Text, Pressable, View, TouchableOpacity, TextInput, Image } from "react-native";
 import icons from '../themes/icons';
 import colors from '../themes/colors';
@@ -11,32 +11,40 @@ import { connect } from 'react-redux';
 import { changePin } from '../redux/action/pinAction';
 import constants from '../constants/constant';
 
-type CustomSetPinProps = {
+type CustomEnterPinProps = {
     modalVisible: boolean,
     setmodalVisible: (data: boolean) => void;
 }
 
-const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
-const NHAP_PIN: string = 'NHẬP PIN';
-const NHAP_LAI_PIN: string = 'NHẬP LẠI PIN';
+const XAC_NHAN_PIN: string = 'XÁC NHẬN PIN';
 
-const CustomSetPin: React.FC<CustomSetPinProps> = ({modalVisible, setmodalVisible}) => { 
+const deletePin = async () => {
+    const value = await SInfo.deleteItem('key1', constants.keyStore);
+}
+const CustomVerifyPin: React.FC<CustomEnterPinProps> = ({modalVisible, setmodalVisible}) => { 
     const [text, setText] = useState('');
     const [pin, setPin] = useState('');
-    const [pinText, setpinText] = useState(NHAP_PIN);
+    const [pinText, setpinText] = useState(XAC_NHAN_PIN);
 
     let pinData : string;
 
     const savePin = async (pin: string) => { 
-        pinData = await SInfo.setItem("key1", pin, constants.keyStore);    
+        pinData = await SInfo.setItem("key1", pin, constants.keyStore);
         console.log(pinData);     
     }
 
     const getPin = async () => {
-        const gettingPin = await SInfo.getItem("key1",constants.keyStore);
-        console.log(gettingPin); 
+        const gettingPin = await SInfo.getItem("key1", {
+            sharedPreferencesName: "mySharedPrefs",
+            keychainService: "myKeychain",
+          });
+        setPin(gettingPin);
     }
+
+    useEffect(() => { 
+        getPin()
+    },[])
     
 
     return (
@@ -64,7 +72,6 @@ const CustomSetPin: React.FC<CustomSetPinProps> = ({modalVisible, setmodalVisibl
                                 source={icons.close}
                             />
                         </TouchableOpacity>
-
                         {/* Value Input */}
                         <View style={styles.inputView}>
                             <Text style={styles.textView}>{pinText}</Text>
@@ -116,26 +123,21 @@ const CustomSetPin: React.FC<CustomSetPinProps> = ({modalVisible, setmodalVisibl
                                 </TouchableOpacity>
                                 
                                 <CustomCircle number='0' onPress={() => {setText(text + '0')}}/>
+                                
 
+                                {/* OK BUTTON */}
                                 <TouchableOpacity
                                     style={[styles.okBtn, {backgroundColor: text !== '' ? colors.red : colors.charcoal}]}
                                     onPress={() => {
                                         setText('');
-                                        if (pinText === NHAP_PIN) {
-                                            setpinText(NHAP_LAI_PIN);
-                                            setPin(text);
-                                            setText('');
+                                        // Nếu nhập đúng pin ms được dùng tiếp
+                                        console.log(pin)
+                                        if(pin == text) {
+                                            setmodalVisible(!modalVisible);
+                                            deletePin();
+
                                         } else {
-                                            // Nếu nhập 2 pin giống nhau thì: 
-                                            if(text === pin) {
-                                                // Lưu pin vào rnsinfo, thông báo và đóng modal
-                                                savePin(pin);
-                                                getPin();
-                                                Alert.alert('Cài pin thành công');
-                                                setmodalVisible(!modalVisible);                                    
-                                            } else { 
-                                                Alert.alert('2 pin không giống nhau');
-                                            }
+                                            Alert.alert('Nhập sai pin, vui lòng nhập lại')
                                         }
                                     }}
                                     disabled={!(text !== '')}
@@ -194,4 +196,4 @@ const styles = StyleSheet.create({
      }
 })
 
-export default CustomSetPin;
+export default CustomVerifyPin;

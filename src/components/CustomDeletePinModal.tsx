@@ -6,6 +6,7 @@ import SInfo from 'react-native-sensitive-info';
 import icons from '../themes/icons';
 import CustomEnterPin from './CustomEnterPinModal';
 import constants from '../constants/constant';
+import CustomVerifyPin from './CustomVerifyPin';
 
 type CustomDeletePinProps = { 
     modalVisible: boolean,
@@ -35,7 +36,7 @@ const CustomDeletePin : React.FC<CustomDeletePinProps> = ({modalVisible, setmoda
             }}
         >   
             {/* Enter Pin */}
-            <CustomEnterPin
+            <CustomVerifyPin
                 modalVisible={enterPinVisible}
                 setmodalVisible={setEnterPinVisible}
             />
@@ -44,12 +45,8 @@ const CustomDeletePin : React.FC<CustomDeletePinProps> = ({modalVisible, setmoda
             <TouchableOpacity
                 style={styles.modalView}
                 onPress={() => {
-                    console.log(enterPinVisible);
-                    setEnterPinVisible(!enterPinVisible);
-                    console.log(enterPinVisible);
-                    
+                    setEnterPinVisible(!enterPinVisible);                  
                     //TODO: Xử lý nhập pin đúng thì mới xóa pin
-                    deletePin();
                 }}
             >   
                 <View>
