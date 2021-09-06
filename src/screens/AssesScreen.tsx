@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { AppState, View, Text, Image, TouchableOpacity, StyleSheet,Modal, TextInput } from 'react-native';
-import icons from '../themes/icons'
+import icons, { portfolio } from '../themes/icons'
 import colors from '../themes/colors'
 import VolumeScreen from './VolumeScreen';
 import PopularScreen from './PopularScreen';
@@ -16,6 +16,8 @@ import SInfo from 'react-native-sensitive-info';
 import CustomDeletePin from '../components/CustomDeletePinModal';
 import CustomEnterPin from '../components/CustomEnterPinModal';
 import constants from '../constants/constant';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllCoin } from '../redux/action/coinAction';
 
 const Tab = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
@@ -37,9 +39,18 @@ function AssesScreen({ navigation }) {
     const [enterPinVisible, setEnterPinVisible] = useState(false);
     const [checkPin, setCheckPin] = useState(false);
 
+    const dispatch = useDispatch();
+    const coinReducer = useSelector((state: any) => state?.coinReducer);
+    const coins = coinReducer.coins;
+
+    useEffect(() => {
+        dispatch(getAllCoin())
+        console.log('redux',coins)
+    }, [])
+
     const appState = useRef(AppState.currentState);
     const [appStateVisible, setAppStateVisible] = useState(appState.current);
-
+    
     const getPin = async () => {
         const gettingPin = await SInfo.getItem("key1", constants.keyStore);
         if(gettingPin === undefined) {
@@ -81,6 +92,9 @@ function AssesScreen({ navigation }) {
                 subscription.remove();
                 };
         });
+
+        //lay coin
+        
         
     }, [])
 
@@ -123,6 +137,16 @@ function AssesScreen({ navigation }) {
                     </TouchableOpacity>
 
                     <Text style={styles.title}>Thu1Coin</Text>
+
+                    <TouchableOpacity
+                        onPress={() => { navigation.navigate('Portfolio')}}
+                    >
+                        <Image
+                            style={styles.portfolioImg}
+                            source={icons.portfolio}
+                            resizeMode='cover'
+                        />
+                    </TouchableOpacity>
                 </View>
 
                 {/* Search */}
@@ -146,6 +170,7 @@ function AssesScreen({ navigation }) {
                         onChangeText={setSearchText}
                     />
                 </View>
+                
                 <Stack.Navigator>
                     <Stack.Screen
                         name="Home"
@@ -179,6 +204,13 @@ const styles = StyleSheet.create({
         paddingHorizontal: 8,
     
     },
+    portfolioImg : { 
+        flex: 1,
+        width: 30, 
+        height: 30,
+        marginLeft: 100,
+        borderRadius: 50,
+    }
 
 })
 

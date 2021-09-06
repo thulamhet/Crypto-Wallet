@@ -16,11 +16,11 @@ type CustomDeletePinProps = {
 const XOA_PIN = 'XÓA PIN';
 
 const deletePin = async () => {
-    const value = await SInfo.deleteItem('key1', constants.keyStore);
+    const value = await SInfo.deleteItem(constants.pinKey, constants.keyStore);
 }
 
 const getPin = async () => {
-    const gettingPin = await SInfo.getItem("key1", constants.keyStore);
+    const gettingPin = await SInfo.getItem(constants.pinKey, constants.keyStore);
 }
 
 const CustomDeletePin : React.FC<CustomDeletePinProps> = ({modalVisible, setmodalVisible}) => { 
@@ -46,7 +46,6 @@ const CustomDeletePin : React.FC<CustomDeletePinProps> = ({modalVisible, setmoda
                 style={styles.modalView}
                 onPress={() => {
                     setEnterPinVisible(!enterPinVisible);                  
-                    //TODO: Xử lý nhập pin đúng thì mới xóa pin
                 }}
             >   
                 <View>

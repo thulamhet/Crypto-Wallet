@@ -31,12 +31,12 @@ const CustomEnterPin: React.FC<CustomEnterPinProps> = ({modalVisible, setmodalVi
     let pinData : string;
 
     const savePin = async (pin: string) => { 
-        pinData = await SInfo.setItem("key1", pin, constants.keyStore);
+        pinData = await SInfo.setItem(constants.pinKey, pin, constants.keyStore);
         console.log(pinData);     
     }
 
     const getPin = async () => {
-        const gettingPin = await SInfo.getItem("key1", {
+        const gettingPin = await SInfo.getItem(constants.pinKey, {
             sharedPreferencesName: "mySharedPrefs",
             keychainService: "myKeychain",
           });

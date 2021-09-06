@@ -25,14 +25,12 @@ const PopularScreen = ({navigation}) => {
                 setLink(res1.data)
             }
             else {
-                //TODO: Báo lỗi lấy dữ liệu thất bại
                 console.log('Failed to get symbols');
             }
 
         } catch (error) {
             console.log(error);
             console.log('Failed to get symbols');
-            //TODO: Báo lỗi lấy dữ liệu thất bại
         }
         finally {
             setIsRefreshing(false);

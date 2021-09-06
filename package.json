@@ -30,7 +30,8 @@
     "react-native-sensitive-info": "^6.0.0-alpha.9",
     "react-native-tab-view": "^3.1.1",
     "react-navigation": "^4.4.4",
-    "react-redux": "^7.2.4"
+    "react-redux": "^7.2.4",
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

@@ -7,7 +7,7 @@ export const tether = require("../assets/icons/tether_icon.png");
 export const back = require("../assets/icons/back_icon.jpg");
 export const close = require("../assets/icons/close_icon.png");
 export const deleteicon = require("../assets/icons/delete_icon.png");
-
+export const portfolio = require("../assets/icons/portforlio_icon.png");
 export default {
     menu,
     search,
@@ -17,4 +17,5 @@ export default {
     back,
     close,
     deleteicon,
+    portfolio,
 }

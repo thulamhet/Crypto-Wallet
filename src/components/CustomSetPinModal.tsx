@@ -29,12 +29,12 @@ const CustomSetPin: React.FC<CustomSetPinProps> = ({modalVisible, setmodalVisibl
     let pinData : string;
 
     const savePin = async (pin: string) => { 
-        pinData = await SInfo.setItem("key1", pin, constants.keyStore);    
+        pinData = await SInfo.setItem(constants.pinKey, pin, constants.keyStore);    
         console.log(pinData);     
     }
 
     const getPin = async () => {
-        const gettingPin = await SInfo.getItem("key1",constants.keyStore);
+        const gettingPin = await SInfo.getItem(constants.pinKey,constants.keyStore);
         console.log(gettingPin); 
     }
     

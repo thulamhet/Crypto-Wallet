@@ -7,8 +7,6 @@ import { SearchContext } from '../../App';
 import { useMemo } from 'react';
 import CoinAPI from '../services/api';
 
-const symbol = 'BTCB,WBTC,BTC,YFI,MKR,ETH,BCH,COMP,AAVE,BNB,KSM,XMR,DASH,LTC,DCR,BSV,QNT,EGLD,ZEC,AXS,ZEN,FIL,ETC,SOL,BTG,ICP,NEO,FTT,UNI,LINK,LUNA,DOT,AVAX,WAVES,FLOW,CAKE,OKB,HNT,ATOM,HT,SUSHI,QTUM,SNX,KCS,RUNE,THETA,CEL,EOS,VGX,BNT,NEAR,XTZ,CELO,AUDIO,LEO,CRV,ADA,NEXO,KLAY,ENJ,STX,MATIC,MDX,XRP,MIOTA,ONT,ZRX,UST,DAI,USDT,BUSD,USDC,TUSD,PAX,GRT,ALGO,MANA,BAT,FTM,XLM,CHZ,TFUEL,DOGE,HBAR,XEM,RVN,CRO,XDC,VET,ZIL,ONE,TRX,DGB,AMP,TEL,SC,REV,HOT,BTT,SHIB'
-
 const VolumeScreen = ({navigation}) => {
     const [allAssets, setAllAssets] = useState([]);
     const [link, setLink] = useState([])
@@ -27,13 +25,11 @@ const VolumeScreen = ({navigation}) => {
                 setLink(res1.data)
             }
             else {
-                //TODO: Báo lỗi lấy dữ liệu thất bại
                 console.log('Failed')
             }
 
         } catch (error) {
             console.log(error);
-            //TODO: Báo lỗi lấy dữ liệu thất bại
         }
         finally {
             setIsRefreshing(false);

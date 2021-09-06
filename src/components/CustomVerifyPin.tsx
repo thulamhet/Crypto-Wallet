@@ -20,7 +20,7 @@ const windowHeight = Dimensions.get('window').height;
 const XAC_NHAN_PIN: string = 'XÁC NHẬN PIN';
 
 const deletePin = async () => {
-    const value = await SInfo.deleteItem('key1', constants.keyStore);
+    const value = await SInfo.deleteItem(constants.pinKey, constants.keyStore);
 }
 const CustomVerifyPin: React.FC<CustomEnterPinProps> = ({modalVisible, setmodalVisible}) => { 
     const [text, setText] = useState('');
@@ -30,15 +30,12 @@ const CustomVerifyPin: React.FC<CustomEnterPinProps> = ({modalVisible, setmodalV
     let pinData : string;
 
     const savePin = async (pin: string) => { 
-        pinData = await SInfo.setItem("key1", pin, constants.keyStore);
+        pinData = await SInfo.setItem(constants.pinKey, pin, constants.keyStore);
         console.log(pinData);     
     }
 
     const getPin = async () => {
-        const gettingPin = await SInfo.getItem("key1", {
-            sharedPreferencesName: "mySharedPrefs",
-            keychainService: "myKeychain",
-          });
+        const gettingPin = await SInfo.getItem(constants.pinKey,constants.keyStore);
         setPin(gettingPin);
     }
 
@@ -135,7 +132,6 @@ const CustomVerifyPin: React.FC<CustomEnterPinProps> = ({modalVisible, setmodalV
                                         if(pin == text) {
                                             setmodalVisible(!modalVisible);
                                             deletePin();
-
                                         } else {
                                             Alert.alert('Nhập sai pin, vui lòng nhập lại')
                                         }
@@ -192,7 +188,7 @@ const styles = StyleSheet.create({
     },
     inputView: {
         alignSelf: 'center', 
-        alignItems:'center'
+        alignItems:'center',
      }
 })
 

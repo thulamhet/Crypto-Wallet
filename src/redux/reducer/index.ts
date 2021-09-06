@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
 
 import pinReducer from "./pinReducer"
+import coinReducer from "./coinReducer";
 
 
-export default combineReducers({pinReducer});
+export default combineReducers({coinReducer});
