@@ -19,21 +19,21 @@ function App() {
         <NavigationContainer>
             <Provider store={store}>
                 <Stack.Navigator>
-                {/* <Stack.Screen
+                    <Stack.Screen
                         name="Portfolio"
                         component={PortfolioScreen}
                         options={{ headerShown: false }}
-                    /> */}
+                    />
                     <Stack.Screen
                         name="Asses"
                         component={AssesScreen}
                         options={{ headerShown: false }}
                     />
-                    <Stack.Screen
+                    {/* <Stack.Screen
                         name="Portfolio"
                         component={PortfolioScreen}
                         options={{ headerShown: false }}
-                    />
+                    /> */}
                     <Stack.Screen
                         name="CoinScreen"
                         component={CoinScreen}

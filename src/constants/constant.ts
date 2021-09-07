@@ -5,7 +5,7 @@ const keyStore = {
 
 const pinKey = 'key1';
 
-const keyStorage = '130720011';
+const keyStorage = '1307201011';
 
 const constants =  {
     keyStore,

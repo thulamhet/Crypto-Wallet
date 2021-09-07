@@ -12,14 +12,23 @@ const PortfolioScreen : React.FC = () => {
     const [isRefreshing, setIsRefreshing] = useState(false);
     const [addModalVisible, setAddModalVisible] = useState(false);
     const [currentBalance, setCurrentBalance] = useState(0);
-    const [quantity, setQuantity] = useState(null);
-
-    const getData = async () => {
+    const [quantity, setQuantity] = useState(0);
+    const [priceCoin, setPriceCoin] = useState(0);
+    const[symbol, setSymbol] = useState('');
+    const [ownCoin, setOwnCoin] = useState([]);
+    const getData = async (allAssets) => {
         try {
         const jsonValue = await AsyncStorage.getItem(constants.keyStorage);
         if(jsonValue !== 'null')  {
-            console.log('json',jsonValue);
-            setCurrentBalance(parseFloat(jsonValue));
+
+
+            console.log('jsonparse',JSON.parse(jsonValue));//obj
+            console.log(typeof JSON.parse(jsonValue));
+
+
+            //TODO: no chua update
+            getInitBalance(JSON.parse(jsonValue), allAssets);
+            setOwnCoin(JSON.parse(jsonValue));
         }
         return jsonValue != null ? JSON.parse(jsonValue) : null;
         } catch(e) {
@@ -41,9 +50,11 @@ const PortfolioScreen : React.FC = () => {
                 const symbols = sortedAssets.map((asset) => asset.symbol).join(',');
                 let res1 = await CoinAPI.getSymbolsInfo(symbols);
                 setLink(res1.data);
+                console.log(res)
+                getData(res.data)
             }
             else {
-                console.log('Failed to get data')
+                console.log('Failed to get data');
             }
         } catch (error) {
             console.log(error);
@@ -57,6 +68,7 @@ const PortfolioScreen : React.FC = () => {
         try {
           const jsonValue = JSON.stringify(value)
           await AsyncStorage.setItem(constants.keyStorage, jsonValue)
+        //   await AsyncStorage.removeItem(constants.keyStorage)
         } catch (e) {
             Alert.alert('Failed to store data')
             console.log(e);
@@ -67,16 +79,59 @@ const PortfolioScreen : React.FC = () => {
     useEffect(() => {
         if (allAssets != null)
             reloadData();  
-            const balance = getData();
-            console.log('balance',balance);
-            // if(balance) setCurrentBalance(balance)
              // Chỉ lấy dữ liệu trong lần đầu render 
     }, []);
+    
+    const updateBalance = (ownCoin) => {
+        let addBalance = 0;
+        if(ownCoin.length > 0)
+            for (let j = 0; j < allAssets.length; j++) { 
+                if (ownCoin[ownCoin.length - 1].symbol === allAssets[j].symbol) { 
+                    addBalance += (allAssets[j].quote.USD.price * parseInt(quantity));
+                    console.log('quanti',parseInt(quantity) )
+                    console.log('asss',allAssets[j].quote.USD.price )
+                    break;
+                }
+            }
+        console.log('sumRS', addBalance)
+        console.log('allassss', allAssets)
+        if(addBalance !== NaN) 
+            setCurrentBalance(currentBalance + addBalance);
+    }
+
+    const getInitBalance = (myCoin, allAssets) => {
+        let Balance = 0;
+        for (let i = 0; i < myCoin.length; i++) {
+            for (let j = 0; j < allAssets.length; j++) { 
+                if (myCoin[i].symbol == allAssets[j].symbol) { 
+                    Balance += (allAssets[j].quote.USD.price * parseInt(myCoin[i].quantity));
+                    break;
+                }
+            }
+        }
+        // console.log(myCoin[0].symbol == allAssets[0].symbol)
+        // console.log('allasSYmbol', allAssets[0].symbol)
+        // console.log('mycoinsymbol',myCoin[0].symbol)
+        // console.log('allas', allAssets)
+        // console.log('price', allAssets[0].quote.USD.price)
+        // console.log('quantity', parseInt(myCoin[0].quantity))
+        // console.log('value',myCoin);
+        // console.log('sumXXXX', typeof Balance)
+        //TODO: fix de currBalance update
+        // kO phai loi o day tai vi curr bi update sai o  cho khac
+        setCurrentBalance(Balance);
+        console.log('currentBalance', currentBalance)
+    }
 
     useEffect(() => {
-        storeData(currentBalance);
-        //Store data mỗi lần update currbala
-    }, [currentBalance])
+        console.log('owncoin', ownCoin);
+        updateBalance(ownCoin);
+        if(ownCoin.length !== 0)
+        storeData(ownCoin);
+        console.log(3)
+    }, [ownCoin])
+
+  
 
     const renderItem = ({item}) => { 
         
@@ -198,13 +253,9 @@ const PortfolioScreen : React.FC = () => {
                                     borderRadius: 10,
                                 }}
                                 onPress={() => {
-                                    //TODO: chua set dc balance
-                                    setCurrentBalance(currentBalance + item.quote.USD.price * quantity);
-                                    console.log('price', item.quote.USD.price);
-                                    console.log('quan', quantity);
-                                    console.log('item', item)
+                                    //TODO: here
                                     setAddModalVisible(!addModalVisible);
-                                    console.log(item)
+                                    setOwnCoin([...ownCoin,{symbol, quantity}]);
                                 }}>
                                 <Text style={{color: colors.white}}>Add</Text>
                             </TouchableOpacity>
@@ -238,9 +289,10 @@ const PortfolioScreen : React.FC = () => {
                         style={styles.addBtn}
                         onPress={()=> {
                             setAddModalVisible(!addModalVisible);
-                            setCurrentBalance(currentBalance + item.quote.USD.price);
-                            //TODO: ấn add xong thì xóa add thay bằng số coin
+                            setPriceCoin(item.quote.USD.price);
+                            setSymbol(item.symbol);
                         }}
+                        //TODO: here
                     >
                         <Text style={{color: colors.white, alignSelf: 'center'}}>Add</Text>
                     </TouchableOpacity>
